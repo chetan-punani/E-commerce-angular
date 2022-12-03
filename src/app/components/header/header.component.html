@@ -1,0 +1,24 @@
+<ul class="nav justify-content-between">
+    <li class="nav-item">
+      <a class="nav-link" routerLink="" routerLinkActive="active">
+        <b>B-commerce <i class="bi bi-shop-window"></i></b>
+    </a>
+    </li>
+    <li class="nav-item">
+      <app-searchbar></app-searchbar>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" routerLink="cart" routerLinkActive="active">
+        <b>Cart <i class="bi bi-cart"></i></b></a>
+    </li>
+    <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <b>User Name <i class="bi bi-person-circle"></i></b>
+      </a>
+      <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+        <li><a class="dropdown-item" routerLink="profile" routerLinkActive="active">Profile</a></li>
+        <li><a class="dropdown-item" routerLink="my-orders" routerLinkActive="active">My Orders</a></li>
+        <li><a class="dropdown-item" routerLink="logout" routerLinkActive="active">Logout</a></li>
+      </ul>
+    </li>
+</ul>
