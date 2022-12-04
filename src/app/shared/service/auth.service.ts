@@ -12,7 +12,7 @@ export class AuthService {
 
   userSubject: Subject<SignUpResponse> = new Subject<SignUpResponse>();
   user!: SignUpResponse;
-  
+   
   constructor(private http: HttpClient) { }
 
   signUp(newUser: SignupNewUser): Observable<SignUpResponse>{

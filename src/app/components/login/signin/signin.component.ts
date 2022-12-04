@@ -36,7 +36,7 @@ export class SigninComponent implements OnInit {
       console.log("Signed In User", userResponse);
       this.authService.userSubject.next(userResponse);
       this.authService.user = userResponse;
-      localStorage.setItem("angularTraining",JSON.stringify(this.authService.user));
+      // localStorage.setItem("angularTraining",JSON.stringify(this.authService.user));
     })
   }
   
