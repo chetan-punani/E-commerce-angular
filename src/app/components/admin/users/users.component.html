@@ -1,6 +1,7 @@
 <div class="m-5">
     <div>
-        <button type="button" class="btn btn-primary m-1">Add Users <i class="bi bi-plus"></i></button>
+        <button type="button" class="btn btn-primary m-1" (click)="showAddUser()">Add Users <i class="bi bi-plus"></i></button>
+        <app-actionon-users *ngIf="hide"></app-actionon-users>
     </div>
     <table class="table table-striped table-hover">
         <thead>

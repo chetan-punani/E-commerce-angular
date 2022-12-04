@@ -1,7 +1,8 @@
-
 <div class="m-5">
     <div>
-        <button type="button" class="btn btn-primary m-1">Add Products <i class="bi bi-plus"></i></button>
+        <button type="button" class="btn btn-primary m-1" (click)="showAddProduct()">Add Products <i
+                class="bi bi-plus"></i></button>
+        <app-actionon-products *ngIf="hide"></app-actionon-products>
     </div>
     <table class="table table-striped table-hover">
         <thead>
@@ -10,46 +11,22 @@
                 <th>Description</th>
                 <th>Price</th>
                 <th>Stock</th>
+                <th>Category</th>
                 <th>Action</th>
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>I Phone</td>
-                <td>I Phone is nice</td>
-                <td>80,000</td>
-                <td>10</td>
+            <tr *ngFor="let product of productList; let i = index">
+                <td> {{ product.name }} </td>
+                <td> {{ product.description }} </td>
+                <td> {{ product.price }} </td>
+                <td> {{ product.stock }} </td>
+                <td> {{ product.category }} </td>
                 <td>
                     <div class="d-flex">
                         <button type="button" class="btn btn-success m-1">View</button>
                         <button type="button" class="btn btn-primary m-1">Edit</button>
-                        <button type="button" class="btn btn-danger m-1">delete</button>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>I Phone</td>
-                <td>I Phone is nice</td>
-                <td>80,000</td>
-                <td>10</td>
-                <td>
-                    <div class="d-flex">
-                        <button type="button" class="btn btn-success m-1">View</button>
-                        <button type="button" class="btn btn-primary m-1">Edit</button>
-                        <button type="button" class="btn btn-danger m-1">delete</button>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>I Phone</td>
-                <td>I Phone is nice</td>
-                <td>80,000</td>
-                <td>10</td>
-                <td>
-                    <div class="d-flex">
-                        <button type="button" class="btn btn-success m-1">View</button>
-                        <button type="button" class="btn btn-primary m-1">Edit</button>
-                        <button type="button" class="btn btn-danger m-1">delete</button>
+                        <button type="button" class="btn btn-danger m-1" (click)="deleteProduct(product.id)">delete</button>
                     </div>
                 </td>
             </tr>

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Product } from 'src/app/shared/models/product.model';
+import { DataService } from 'src/app/shared/service/data.service';
 
 @Component({
   selector: 'app-main',
@@ -7,9 +9,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MainComponent implements OnInit {
 
-  constructor() { }
+  productList: Array<any> = [];
+
+  constructor(private dataService: DataService) { }
 
   ngOnInit(): void {
+    this.dataService.getProduct().subscribe(product => {
+      if (product) {
+        this.productList = product;
+      }
+    })
   }
 
 }

@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Product } from 'src/app/shared/models/product.model';
+import { DataService } from 'src/app/shared/service/data.service';
 
 @Component({
   selector: 'app-product',
@@ -7,9 +9,31 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProductComponent implements OnInit {
 
+  @Input('categoryWiseProduct') categoryWiseProduct:  Array<any> = []
+  productListArray: Array<any> = [];
+  @ViewChild('scroller') scroller: ElementRef<any>;
+  categoryName: string = '';
+
+
   constructor() { }
 
   ngOnInit(): void {
+    for(const key in this.categoryWiseProduct){
+      this.productListArray.push(this.categoryWiseProduct[key]);
+    }
+  }
+
+  onWheel(event: WheelEvent): void {
+    if (event.deltaY > 0) this.scrollToRight();
+    else this.scrollToLeft();
+  }
+
+  scrollToLeft(): void {
+    this.scroller.nativeElement.scrollLeft -= 400;
+  }
+
+  scrollToRight(): void {
+    this.scroller.nativeElement!.scrollLeft += 400;
   }
 
 }

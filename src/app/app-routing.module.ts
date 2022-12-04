@@ -10,6 +10,7 @@ import { ProfileComponent } from './components/user/profile/profile.component';
 import { SearchComponent } from './components/search/search.component';
 import { MyorderComponent } from './components/user/myorder/myorder.component';
 import { DashboardComponent } from './components/admin/dashboard/dashboard.component';
+import { AuthGuardGuard } from './shared/guard/auth-guard.guard';
 
 const routes: Routes = [
   {
@@ -26,21 +27,23 @@ const routes: Routes = [
   },
   {
     path: 'profile',
-    component: ProfileComponent
+    component: ProfileComponent,
+    canActivate: [AuthGuardGuard]
   },
   {
     path: 'my-orders',
-    component: MyorderComponent
+    component: MyorderComponent,
+    canActivate: [AuthGuardGuard]
   },
   {
     path: 'product',
     children: [
       {
         path: '',
-        component: ProductComponent
+        component: ProductComponent,
       },
       {
-        path: ':id',
+        path: ':name',
         component: ProductViewComponent
       },
     ]
@@ -51,11 +54,13 @@ const routes: Routes = [
   },
   {
     path: 'cart',
-    component: CartComponent
+    component: CartComponent,
+    canActivate: [AuthGuardGuard]
   },
   {
     path: 'admin',
-    component: DashboardComponent
+    component: DashboardComponent,
+    canActivate: [AuthGuardGuard]
   },
 
 ];

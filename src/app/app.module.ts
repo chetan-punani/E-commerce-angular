@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
+import { DragScrollModule } from 'ngx-drag-scroll';
+
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -29,6 +31,7 @@ import { UsersComponent } from './components/admin/users/users.component';
 import { ActiononUsersComponent } from './components/admin/users/actionon-users/actionon-users.component';
 import { ActiononProductsComponent } from './components/admin/products/actionon-products/actionon-products.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AuthGuardGuard } from './shared/guard/auth-guard.guard';
 
 @NgModule({
   declarations: [
@@ -63,9 +66,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    DragScrollModule,
+    
   ],
-  providers: [],
+  providers: [AuthGuardGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

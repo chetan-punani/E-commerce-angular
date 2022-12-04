@@ -6,7 +6,7 @@
                     <div class="col-2 d-flex align-items-center">
                         <div>
                             <div class="row">
-                                <p>Electronic Items</p>
+                                <h6>{{ categoryName }} Items</h6>
                             </div>
                             <div class="row">
                                 <button type="button" class="btn btn-primary" id="product-view-btn">View All</button>
@@ -16,17 +16,15 @@
 
                     <div class="col-10">
                         <div class="row">
-                            <div class="col">
-                                <app-product-list></app-product-list>
-                            </div>
-                            <div class="col">
-                                <app-product-list></app-product-list>
-                            </div>
-                            <div class="col">
-                                <app-product-list></app-product-list>
-                            </div>
+                            <drag-scroll #scroller [scroll-x-wheel-enabled]="true">
+                                <div class="col" *ngFor="let p of productListArray; let i = index" drag-scroll-item>
+                                    <div class="product">
+                                        <app-product-list [singleProduct]="p">
+                                        </app-product-list>
+                                    </div>
+                                </div>
+                            </drag-scroll>
                         </div>
-
                     </div>
                 </div>
             </div>
