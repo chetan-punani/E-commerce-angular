@@ -1,3 +1,4 @@
+
 export interface Product{
     name: string,
     image?: BinaryData,
@@ -5,6 +6,6 @@ export interface Product{
     price: number,
     stock: number,
     category: string,
-    id?: any
+    id?: string
 }
-  
+

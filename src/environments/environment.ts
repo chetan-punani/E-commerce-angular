@@ -3,6 +3,16 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
+  firebaseConfig : {
+    apiKey: "AIzaSyDV2dGKqnyfMD54hskK1CW06T0z8plUAFI",
+    authDomain: "bcommerce-c702b.firebaseapp.com",
+    databaseURL: "https://bcommerce-c702b-default-rtdb.firebaseio.com",
+    projectId: "bcommerce-c702b",
+    storageBucket: "bcommerce-c702b.appspot.com",
+    messagingSenderId: "209570028853",
+    appId: "1:209570028853:web:c05752c36eac65075c407c",
+    measurementId: "G-7ZVJKKNRTK"
+  },
   production: false
 };
 

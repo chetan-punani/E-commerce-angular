@@ -9,8 +9,8 @@ import { DataService } from 'src/app/shared/service/data.service';
 })
 export class ProductComponent implements OnInit {
 
-  @Input('categoryWiseProduct') categoryWiseProduct:  Array<any> = []
-  productListArray: Array<any> = [];
+  @Input('categoryWiseProduct') categoryWiseProduct:  Product[] = []
+  productListArray: Product[] = [];
   @ViewChild('scroller') scroller: ElementRef<any>;
   categoryName: string = '';
 

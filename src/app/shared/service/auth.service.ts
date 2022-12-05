@@ -19,7 +19,7 @@ export class AuthService {
     return this.http.post<SignUpResponse>(this.authUrlSignUp, newUser);
   }
 
-  signIn(user: SignupNewUser){
+  signIn(user: SignupNewUser): Observable<SignUpResponse> {
     return this.http.post<SignUpResponse>(this.authURLSignIn, user);
   }
 

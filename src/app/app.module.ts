@@ -2,6 +2,13 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { DragScrollModule } from 'ngx-drag-scroll';
+import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
+import { getFirestore, provideFirestore } from '@angular/fire/firestore';
+import { AngularFireModule } from "@angular/fire/compat";
+import { AngularFireAuthModule } from "@angular/fire/compat/auth";
+import { AngularFireStorageModule } from '@angular/fire/compat/storage';
+import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
+import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -32,6 +39,7 @@ import { ActiononUsersComponent } from './components/admin/users/actionon-users/
 import { ActiononProductsComponent } from './components/admin/products/actionon-products/actionon-products.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthGuardGuard } from './shared/guard/auth-guard.guard';
+import { environment } from 'src/environments/environment';
 
 @NgModule({
   declarations: [
@@ -68,7 +76,11 @@ import { AuthGuardGuard } from './shared/guard/auth-guard.guard';
     FormsModule,
     ReactiveFormsModule,
     DragScrollModule,
-    
+    AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFireAuthModule,
+    AngularFireStorageModule,
+    AngularFirestoreModule,
+    AngularFireDatabaseModule
   ],
   providers: [AuthGuardGuard],
   bootstrap: [AppComponent]

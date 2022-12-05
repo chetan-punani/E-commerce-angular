@@ -2,7 +2,7 @@
     <div>
         <button type="button" class="btn btn-primary m-1" (click)="showAddProduct()">Add Products <i
                 class="bi bi-plus"></i></button>
-        <app-actionon-products *ngIf="hide"></app-actionon-products>
+        <app-actionon-products *ngIf="hide" [productID]="id" [productCategory]="category"></app-actionon-products>
     </div>
     <table class="table table-striped table-hover">
         <thead>
@@ -24,9 +24,8 @@
                 <td> {{ product.category }} </td>
                 <td>
                     <div class="d-flex">
-                        <button type="button" class="btn btn-success m-1">View</button>
-                        <button type="button" class="btn btn-primary m-1">Edit</button>
-                        <button type="button" class="btn btn-danger m-1" (click)="deleteProduct(product.id)">delete</button>
+                        <button type="button" class="btn btn-success m-1" (click)="viewProduct(product.id, product.category)">View</button>
+                        <button type="button" class="btn btn-danger m-1" (click)="deleteProduct(product.id, product.category)">delete</button>
                     </div>
                 </td>
             </tr>

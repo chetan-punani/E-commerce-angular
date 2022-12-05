@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { SignupNewUser } from 'src/app/shared/models/users.model';
+import { SignupNewUser, SignUpResponse } from 'src/app/shared/models/users.model';
 import { AuthService } from 'src/app/shared/service/auth.service';
 
 @Component({
@@ -18,20 +18,20 @@ export class SignupComponent implements OnInit {
     this.initForm();
   }
 
-  initForm() {
+  initForm(): void {
     this.signUpForm = new FormGroup({
       email: new FormControl(null, Validators.required),
       password: new FormControl(null, Validators.required)
     })
   }
 
-  signUp(){
+  signUp(): void{
     const newUser: SignupNewUser = {
       email: this.signUpForm.value.email,
       password: this.signUpForm.value.password,
       returnSecureToken: true
     }
-    this.authService.signUp(newUser).subscribe(response => console.log("sign up response", response));
+    this.authService.signUp(newUser).subscribe((response: SignUpResponse) => console.log("sign up response", response));
   }
 
 }

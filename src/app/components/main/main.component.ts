@@ -9,13 +9,14 @@ import { DataService } from 'src/app/shared/service/data.service';
 })
 export class MainComponent implements OnInit {
 
-  productList: Array<any> = [];
+  productList: any = [];
 
   constructor(private dataService: DataService) { }
 
   ngOnInit(): void {
-    this.dataService.getProduct().subscribe(product => {
+    this.dataService.getProduct().subscribe((product: Product[]) => {
       if (product) {
+        console.log(product)
         this.productList = product;
       }
     })

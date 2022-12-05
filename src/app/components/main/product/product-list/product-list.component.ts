@@ -8,8 +8,8 @@ import { Product } from 'src/app/shared/models/product.model';
 })
 export class ProductListComponent implements OnInit {
 
-  @Input() singleProduct: any = {};
-  product: Array<Product> = [];
+  @Input() singleProduct: Product;
+  product: Product[] = [];
  
 
   constructor() { }
