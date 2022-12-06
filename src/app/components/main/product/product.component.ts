@@ -1,5 +1,5 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
-import { Product } from 'src/app/shared/models/product.model';
+import { Product, ProductWithId } from 'src/app/shared/models/product.model';
 import { DataService } from 'src/app/shared/service/data.service';
 
 @Component({
@@ -9,8 +9,8 @@ import { DataService } from 'src/app/shared/service/data.service';
 })
 export class ProductComponent implements OnInit {
 
-  @Input('categoryWiseProduct') categoryWiseProduct:  Product[] = []
-  productListArray: Product[] = [];
+  @Input('categoryWiseProduct') categoryWiseProduct:  ProductWithId[] = []
+  productListArray: ProductWithId[] = [];
   @ViewChild('scroller') scroller: ElementRef<any>;
   categoryName: string = '';
 

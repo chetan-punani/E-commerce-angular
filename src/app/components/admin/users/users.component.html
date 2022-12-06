@@ -1,51 +1,26 @@
 <div class="m-5">
     <div>
         <button type="button" class="btn btn-primary m-1" (click)="showAddUser()">Add Users <i class="bi bi-plus"></i></button>
-        <app-actionon-users *ngIf="hide"></app-actionon-users>
+        <app-actionon-users *ngIf="hide" [userID]="id"></app-actionon-users>
     </div>
     <table class="table table-striped table-hover">
         <thead>
             <tr>
-                <th>Name</th>
                 <th>Email</th>
                 <th>Role</th>
                 <th>Action</th>
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>Chetan Punani</td>
-                <td>chetan.punani@bacancy.com</td>
-                <td>admin</td>
+            <tr *ngFor="let user of userList; let i = index">
+                <td> {{ user.email }} </td>
+                <td> {{ user.role }} </td>
                 <td>
                     <div class="d-flex">
-                        <button type="button" class="btn btn-success m-1">View</button>
-                        <button type="button" class="btn btn-primary m-1">Edit</button>
-                        <button type="button" class="btn btn-danger m-1">delete</button>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>Chetan Punani</td>
-                <td>chetan.punani@bacancy.com</td>
-                <td>admin</td>
-                <td>
-                    <div class="d-flex">
-                        <button type="button" class="btn btn-success m-1">View</button>
-                        <button type="button" class="btn btn-primary m-1">Edit</button>
-                        <button type="button" class="btn btn-danger m-1">delete</button>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>Chetan Punani</td>
-                <td>chetan.punani@bacancy.com</td>
-                <td>admin</td>
-                <td>
-                    <div class="d-flex">
-                        <button type="button" class="btn btn-success m-1">View</button>
-                        <button type="button" class="btn btn-primary m-1">Edit</button>
-                        <button type="button" class="btn btn-danger m-1">delete</button>
+                        <button type="button" class="btn btn-success m-1" (click)="viewUser(user.id)">View</button>
+                        <button type="button" class="btn btn-danger m-1" (click)="deleteUser(user.id)">delete</button>
+                        <!-- <button type="button" class="btn btn-success m-1">View</button>
+                        <button type="button" class="btn btn-danger m-1">delete</button> -->
                     </div>
                 </td>
             </tr>

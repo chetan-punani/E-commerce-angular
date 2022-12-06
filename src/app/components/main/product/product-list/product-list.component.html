@@ -1,6 +1,6 @@
 <div class="container m-2">
       <div *ngFor="let p of product; let i = index">
-        <div class="card shadow-sm" [routerLink]="['product' , p.name]">
+        <div class="card shadow-sm" [routerLink]="['product' , p.category, p.id]">
           <img src="https://assets.entrepreneur.com/content/3x2/2000/20171212213121-apple-website.jpeg" class="card-img-top" alt="...">
           <div class="card-body">
             <h6 class="card-title">{{p.name}}</h6>

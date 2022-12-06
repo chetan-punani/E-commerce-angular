@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { SignupNewUser, SignUpResponse } from 'src/app/shared/models/users.model';
 import { AuthService } from 'src/app/shared/service/auth.service';
 
@@ -12,7 +13,7 @@ export class SigninComponent implements OnInit {
 
   signInForm!: FormGroup;
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
     this.initForm();
@@ -37,6 +38,7 @@ export class SigninComponent implements OnInit {
       this.authService.userSubject.next(userResponse);
       this.authService.user = userResponse;
       localStorage.setItem("token",JSON.stringify(this.authService.user));
+      this.router.navigate([''])
     })
   }
   

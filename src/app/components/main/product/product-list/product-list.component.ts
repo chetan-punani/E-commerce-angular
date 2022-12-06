@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { Product } from 'src/app/shared/models/product.model';
+import { Product, ProductWithId } from 'src/app/shared/models/product.model';
 
 @Component({
   selector: 'app-product-list',
@@ -8,8 +8,8 @@ import { Product } from 'src/app/shared/models/product.model';
 })
 export class ProductListComponent implements OnInit {
 
-  @Input() singleProduct: Product;
-  product: Product[] = [];
+  @Input() singleProduct: ProductWithId;
+  product: ProductWithId[] = [];
  
 
   constructor() { }

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Users, UsersWithId } from 'src/app/shared/models/users.model';
+import { AuthService } from 'src/app/shared/service/auth.service';
 
 @Component({
   selector: 'app-users',
@@ -7,15 +9,46 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UsersComponent implements OnInit {
 
+  userList: UsersWithId[] = [];
+  id: string;
   hide: boolean = false;
 
-  constructor() { }
+  constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
+    this.loadUsers();
   }
 
-  showAddUser() : void {
+  loadUsers(): void {
+    this.authService.getUsers().subscribe((user: UsersWithId[]) => {
+      if (user) {
+        console.log(user)
+        this.userList = [];
+        user.forEach((ele) => {
+          this.userList.push(ele);
+        });
+      }
+      console.log(this.userList)
+    })
+  }
+
+  showAddUser(): void {
     this.hide = !this.hide;
+    this.id = '';
+  }
+
+  viewUser(id: string): void {
+    this.id = id;
+    this.hide = !this.hide;
+    this.loadUsers();
+  }
+
+  deleteUser(id: string): void {
+    this.authService.deleteUser(id).subscribe((res: UsersWithId) => {
+      console.log('delete :', res)
+      this.loadUsers();
+    });
+   
   }
 
 }

@@ -1,6 +1,6 @@
 <!-- <app-item-view></app-item-view> -->
 <div class="p-1">
-    <div class="row">
+    <div class="row" *ngIf="productItem">
         <div class="col-2">
         </div>
         <div class="col-8">
@@ -9,7 +9,7 @@
                     <div class="container">
                         <div class="row">
                             <div class="col">
-                                <div style="width: 18rem;">
+                                <div style="min-width: 8rem;">
                                     <img src="https://assets.entrepreneur.com/content/3x2/2000/20171212213121-apple-website.jpeg"
                                         class="card-img-top" alt="...">
                                 </div>
@@ -17,8 +17,8 @@
 
                             <div class="col">
                                 <div class="card-body">
-                                    <h6 class="card-title">Name</h6>
-                                    <p>From 500</p>
+                                    <h6 class="card-title">{{ productItem.name }}</h6>
+                                    <p>From {{ productItem.price }}</p>
                                 </div>
                             </div>
                         </div>

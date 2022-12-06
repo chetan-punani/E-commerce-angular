@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { map, Observable } from 'rxjs';
-import { Product } from 'src/app/shared/models/product.model';
+import { take  } from 'rxjs';
+import { Product, ProductWithId } from 'src/app/shared/models/product.model';
 import { DataService } from 'src/app/shared/service/data.service';
 
 @Component({
@@ -10,11 +10,11 @@ import { DataService } from 'src/app/shared/service/data.service';
 })
 export class ProductsComponent implements OnInit {
 
-  productList: Product[] = [];
+  productList: ProductWithId[] = [];
   id: string;
   category: string;
-
   hide: boolean = false;
+  reset: boolean = false;
 
   constructor(private dataService: DataService) { }
 
@@ -23,9 +23,10 @@ export class ProductsComponent implements OnInit {
   }
 
   loadData(): void {
-    this.dataService.getProduct().subscribe( (product: Product[]) => {
+    this.dataService.getProduct().subscribe( (product: ProductWithId[]) => {
       if (product) {
-        let tempArray: Product[] = [];
+        this.productList = [];
+        let tempArray: ProductWithId[] = [];
         product.forEach((ele) => {
           tempArray = Object.values(ele);
           tempArray.forEach((ele) => {
@@ -39,21 +40,23 @@ export class ProductsComponent implements OnInit {
 
   showAddProduct(): void {
     this.hide = !this.hide;
-    
+    this.id = '';
+    this.category = '';
   }
 
   viewProduct(id: any, category: string) {
     this.id = id;
     this.category = category
-    this.showAddProduct();
+    this.hide = !this.hide;
     this.loadData();
   }
 
   deleteProduct(id: any, category: string) {
-    this.dataService.deleteProduct(id, category).subscribe((res: Product) => {
+    this.dataService.deleteProduct(id, category).subscribe((res: ProductWithId) => {
       console.log('delete :', res)
+      this.loadData();
     });
-    this.loadData();
+    
   }
 
 }

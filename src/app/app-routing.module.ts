@@ -11,6 +11,7 @@ import { SearchComponent } from './components/search/search.component';
 import { MyorderComponent } from './components/user/myorder/myorder.component';
 import { DashboardComponent } from './components/admin/dashboard/dashboard.component';
 import { AuthGuardGuard } from './shared/guard/auth-guard.guard';
+import { AdminGuard } from './shared/guard/admin.guard';
 
 const routes: Routes = [
   {
@@ -43,8 +44,14 @@ const routes: Routes = [
         component: ProductComponent,
       },
       {
-        path: ':name',
-        component: ProductViewComponent
+        path:':category',
+        children: [
+          {
+            path: ':id',
+            component: ProductViewComponent
+          }
+        ]
+       
       },
     ]
   },
@@ -60,7 +67,7 @@ const routes: Routes = [
   {
     path: 'admin',
     component: DashboardComponent,
-    canActivate: [AuthGuardGuard]
+    canActivate: [AuthGuardGuard, AdminGuard]
   },
 
 ];

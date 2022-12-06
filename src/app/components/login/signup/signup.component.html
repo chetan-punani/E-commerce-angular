@@ -12,20 +12,24 @@
                 <div class="row">
                     <form control="" class="form-group" [formGroup]="signUpForm" (ngSubmit)="signUp()">
                         <div class="row">
-                            <input type="text" name="name" id="name" class="form__input" placeholder="User Name">
+                            <input type="text" name="name" id="name" class="form__input" placeholder="User Name"
+                            formControlName="name">
                         </div>
                         <div class="row">
                             <input type="email" name="email" id="email" class="form__input" placeholder="Email"  formControlName="email">
                         </div>
                         <div class="row">
                             <!-- <span class="fa fa-lock"></span> -->
-                            <input type="password" name="password" id="password" class="form__input" placeholder="Password" formControlName="password">
+                            <input type="password" name="password" id="password" class="form__input" placeholder="Password" 
+                            formControlName="password">
                         </div>
                         <div class="row">
-                            <input type="password" name="confirmpassword" id="confirmpassword" class="form__input" placeholder="Confirm Password">
+                            <input type="password" name="confirmpassword" id="confirmpassword" class="form__input" 
+                            placeholder="Confirm Password">
                         </div>
                         <div class="row">
-                            <input type="date" name="dateofbirth" id="dateofbirth" class="form__input" placeholder="Date Of irth">
+                            <input type="date" name="dateofbirth" id="dateofbirth" class="form__input" placeholder="Date Of irth"
+                            formControlName="dob">
                         </div>
                         <div class="row">
                             <input type="submit" value="Sign Up" class="btn">

@@ -40,6 +40,7 @@ import { ActiononProductsComponent } from './components/admin/products/actionon-
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthGuardGuard } from './shared/guard/auth-guard.guard';
 import { environment } from 'src/environments/environment';
+import { AdminGuard } from './shared/guard/admin.guard';
 
 @NgModule({
   declarations: [
@@ -82,7 +83,7 @@ import { environment } from 'src/environments/environment';
     AngularFirestoreModule,
     AngularFireDatabaseModule
   ],
-  providers: [AuthGuardGuard],
+  providers: [AuthGuardGuard, AdminGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

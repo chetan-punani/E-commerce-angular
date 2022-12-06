@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Product } from 'src/app/shared/models/product.model';
 import { DataService } from 'src/app/shared/service/data.service';
 
@@ -11,17 +11,16 @@ import { DataService } from 'src/app/shared/service/data.service';
 export class SearchComponent implements OnInit {
 
   productList: Product[] = [];
-  searchTxt: any;
+  productListFiltered: Product[] = [];
+  searchTxt: any; // { [key: string]: string }
 
-  constructor(private route: ActivatedRoute, private dataService: DataService) { }
+  constructor(private route: ActivatedRoute, private dataService: DataService, private router: Router) { 
+    this.loadData();
+  }
 
   ngOnInit(): void {
-    console.log(this.route.snapshot.queryParams)
-    this.searchTxt = this.route.snapshot.queryParams
-    this.loadData();
-    if(this.searchTxt) {
-      this.filterData()
-    }
+    this.searchTxt = this.route.snapshot.queryParams['search']
+    console.log(this.route.snapshot.queryParams['search'])
   }
 
   loadData(): void {
@@ -35,11 +34,19 @@ export class SearchComponent implements OnInit {
           });
         });
       }
+      this.filterData();
     })
   }
 
   filterData() {
-    
+    this.productListFiltered = this.productList.filter((value: Product) => {
+      return ( (value.name.toLowerCase()).includes(this.searchTxt.toLowerCase()))
+    })
+    console.log(this.productListFiltered)
+  }
+
+  showProduct(id: string) {
+    this.router.navigate(['product',id]);
   }
 
 }
