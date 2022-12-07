@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { DragScrollModule } from 'ngx-drag-scroll';
 import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
@@ -41,6 +41,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthGuardGuard } from './shared/guard/auth-guard.guard';
 import { environment } from 'src/environments/environment';
 import { AdminGuard } from './shared/guard/admin.guard';
+import { AuthInterceptor } from './shared/service/auth.interceptor.service';
+import { ShowproductComponent } from './components/shared/showproduct/showproduct.component';
 
 @NgModule({
   declarations: [
@@ -68,7 +70,8 @@ import { AdminGuard } from './shared/guard/admin.guard';
     OrdersComponent,
     UsersComponent,
     ActiononUsersComponent,
-    ActiononProductsComponent
+    ActiononProductsComponent,
+    ShowproductComponent
   ],
   imports: [
     BrowserModule,
@@ -83,7 +86,7 @@ import { AdminGuard } from './shared/guard/admin.guard';
     AngularFirestoreModule,
     AngularFireDatabaseModule
   ],
-  providers: [AuthGuardGuard, AdminGuard],
+  providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},AuthGuardGuard, AdminGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

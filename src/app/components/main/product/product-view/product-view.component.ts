@@ -24,12 +24,12 @@ export class ProductViewComponent implements OnInit {
     // console.log("queryparams:", this.route.snapshot.params['id'])
     this.category = this.route.snapshot.params['category'];
     this.id = this.route.snapshot.params['id'];
-   this.fetchProductById();
+    this.fetchProductById();
     // console.log('valu -',this.product)
   }
 
   fetchProductById() {
-    this.dataService.getProductById(this.id, this.category).subscribe( (res: ProductWithId) => {
+    this.dataService.getProductById(this.id, this.category).subscribe((res: ProductWithId) => {
       console.log(res)
       this.product = res;
     });
@@ -37,31 +37,33 @@ export class ProductViewComponent implements OnInit {
 
   addToCartProduct(id: string, category: string) {
     let userlocal = localStorage.getItem('token');
-    if(userlocal) {
+    if (userlocal) {
       let User = JSON.parse(userlocal);
       // console.log(User.email)
       const email: string = User.email;
-    if(email) {
-      const item: Cart = {
-        productId: id,
-        productCategory: category,
-        userEmail: email,
-      }
-      this.dataService.addToCart(item).subscribe( (res: CartResponse) => {
-        console.log(res)
-
-        const itemID = {
-          id: res.name,
+      if (email) {
+        const item: Cart = {
+          productId: id,
+          productCategory: category,
+          userEmail: email,
         }
+        this.dataService.addToCart(item).subscribe((res: CartResponse) => {
+          console.log(res)
 
-        this.dataService.putCart(itemID).subscribe((res: CartWithID) => {
-          console.log("update cart", res)
-        });
-      })
-      this.router.navigate(['cart'])
+          const itemID = {
+            id: res.name,
+          }
+
+          this.dataService.putCart(itemID).subscribe((res: CartWithID) => {
+            console.log("update cart", res)
+            this.router.navigate(['cart'])
+          });
+        })
+      }
+    }  else {
+      this.router.navigate(['login'])
     }
-    }
-      
+
   }
 
 }

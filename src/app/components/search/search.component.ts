@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { Product } from 'src/app/shared/models/product.model';
+import { Cart, CartResponse, CartWithID, Product, ProductWithId } from 'src/app/shared/models/product.model';
 import { DataService } from 'src/app/shared/service/data.service';
 
 @Component({
@@ -10,8 +10,8 @@ import { DataService } from 'src/app/shared/service/data.service';
 })
 export class SearchComponent implements OnInit {
 
-  productList: Product[] = [];
-  productListFiltered: Product[] = [];
+  productList: ProductWithId[] = [];
+  productListFiltered: ProductWithId[] = [];
   searchTxt: any; // { [key: string]: string }
 
   constructor(private route: ActivatedRoute, private dataService: DataService, private router: Router) { 
@@ -24,9 +24,9 @@ export class SearchComponent implements OnInit {
   }
 
   loadData(): void {
-    this.dataService.getProduct().subscribe( (product: Product[]) => {
+    this.dataService.getProduct().subscribe( (product: ProductWithId[]) => {
       if (product) {
-        let tempArray: Product[] = [];
+        let tempArray: ProductWithId[] = [];
         product.forEach((ele) => {
           tempArray = Object.values(ele);
           tempArray.forEach((ele) => {
@@ -45,8 +45,39 @@ export class SearchComponent implements OnInit {
     console.log(this.productListFiltered)
   }
 
-  showProduct(id: string) {
-    this.router.navigate(['product',id]);
+  showProduct(id: string , category: string) {
+    this.router.navigate(['product',category,id]);
+  }
+
+  addToCartProduct(id: string, category: string) {
+    let userlocal = localStorage.getItem('token');
+    if (userlocal) {
+      let User = JSON.parse(userlocal);
+      // console.log(User.email)
+      const email: string = User.email;
+      if (email) {
+        const item: Cart = {
+          productId: id,
+          productCategory: category,
+          userEmail: email,
+        }
+        this.dataService.addToCart(item).subscribe((res: CartResponse) => {
+          console.log(res)
+
+          const itemID = {
+            id: res.name,
+          }
+
+          this.dataService.putCart(itemID).subscribe((res: CartWithID) => {
+            console.log("update cart", res)
+            this.router.navigate(['cart'])
+          });
+        })
+      }
+    } else {
+      this.router.navigate(['login'])
+    }
+
   }
 
 }

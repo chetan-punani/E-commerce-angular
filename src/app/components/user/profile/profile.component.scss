@@ -52,3 +52,11 @@ form {
 	}
 }
 
+input.ng-invalid.ng-touched {
+    border: 1px solid red;
+}
+
+.help-block {
+	color: red;
+	margin-left: 10em;
+}

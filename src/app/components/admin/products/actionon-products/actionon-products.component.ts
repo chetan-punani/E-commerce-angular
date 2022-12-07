@@ -88,4 +88,8 @@ export class ActiononProductsComponent implements OnInit, OnDestroy {
     this.productCategory = '';
   }
 
+  resetForm() {
+    this.addProductForm.reset();
+  }
+
 }

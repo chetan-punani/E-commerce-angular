@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { CartWithID, MyOrderWithID, ProductWithId } from 'src/app/shared/models/product.model';
+import { DataService } from 'src/app/shared/service/data.service';
 
 @Component({
   selector: 'app-orders',
@@ -7,9 +9,35 @@ import { Component, OnInit } from '@angular/core';
 })
 export class OrdersComponent implements OnInit {
 
-  constructor() { }
+  myOrdersItem: any;
+
+  constructor(private dataService: DataService) { }
 
   ngOnInit(): void {
+    this.loadOrders();
   }
 
+  loadOrders(): void {
+    this.myOrdersItem = [];
+    let userlocal = localStorage.getItem('token');
+    if(userlocal) {
+
+      this.dataService.getMyOrders().subscribe( (res: MyOrderWithID[]) => {
+        console.log('get orders-', res)
+        res.forEach( (resVal: MyOrderWithID) => {
+          resVal.order.forEach((orderVal: CartWithID) => {
+            this.dataService.getProductById(orderVal.productId, orderVal.productCategory).subscribe( (productVal: ProductWithId) => {
+              this.myOrdersItem.push({
+                name: productVal.name,
+                price: productVal.price,
+                id: resVal.id,
+              })
+            })
+          })
+        })      
+        console.log(this.myOrdersItem)
+      })
+  }
+}
+ 
 }

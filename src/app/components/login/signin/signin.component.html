@@ -1,7 +1,9 @@
 <div class="container-fluid">
     <div class="row main-content bg-success text-center">
         <div class="col-md-4 text-center company__info">
-            <span class="company__logo"><h2><i class="bi bi-shop-window"></i></h2></span>
+            <span class="company__logo">
+                <h2><i class="bi bi-shop-window"></i></h2>
+            </span>
             <h4 class="company_title">B-Commerce</h4>
         </div>
         <div class="col-md-8 col-xs-12 col-sm-12 login_form ">
@@ -12,14 +14,39 @@
                 <div class="row">
                     <form control="" class="form-group" [formGroup]="signInForm" (ngSubmit)="signIn()">
                         <div class="row">
-                            <input type="email" name="email" id="email" class="form__input" placeholder="Email" formControlName="email">
+                            <input type="email" name="email" id="email" class="form__input" placeholder="Email"
+                                formControlName="email">
+                            <span *ngIf="!signInForm.get('email')?.valid && signInForm.get('email')?.touched"
+                                class="help-block">
+                                <span *ngIf="signInForm.get('email')?.hasError('required')">
+                                    Emaili is required!
+                                </span>
+                                <span *ngIf="signInForm.get('email')?.hasError('emailIsForbidden')">
+                                    Please enter a valid email!
+                                </span>
+                            </span>
                         </div>
                         <div class="row">
                             <!-- <span class="fa fa-lock"></span> -->
-                            <input type="password" name="password" id="password" class="form__input" placeholder="Password"  formControlName="password">
+                            <input type="password" name="password" id="password" class="form__input"
+                                placeholder="Password" formControlName="password">
+                            <span *ngIf="!signInForm.get('password')?.valid && signInForm.get('password')?.touched"
+                                class="help-block">
+                                <span *ngIf="signInForm.get('password')?.hasError('required')">
+                                    password Required!
+                                </span>
+                                <span *ngIf="signInForm.get('password')?.hasError('minlength')">
+                                    Password must be 6!
+                                </span>
+                            </span>
                         </div>
                         <div class="row">
-                            <input type="submit" value="Log In" class="btn">
+                            <div class="col">
+                                <input type="submit" value="Log In" class="btn" [disabled]="!signInForm.valid">
+                            </div>
+                            <div class="col">
+                                <input type="button" value="Reset" class="btn" (click)="resetForm()">
+                            </div>
                         </div>
                     </form>
                 </div>

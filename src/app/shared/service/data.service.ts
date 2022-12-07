@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase, AngularFireList } from '@angular/fire/compat/database';
 import { map, Observable, Subject } from 'rxjs';
-import { Cart, CartResponse, CartWithID, Product, ProductWithId } from '../models/product.model';
+import { Cart, CartResponse, CartWithID, MyOrder, MyOrderResponse, MyOrderWithID, Product, ProductWithId } from '../models/product.model';
 
 @Injectable({
   providedIn: 'root'
@@ -18,16 +18,19 @@ export class DataService {
   getProduct(): Observable<ProductWithId[]> {
     return this.http.get<ProductWithId[]>(this.firebaseURL + `product.json`)
       .pipe(map(product => {
-        // const productArray: Array<Product> = [];
-        // for (const key in product) {
-        //   productArray.push(product[key]);
-        // }
         return (this.converter(product));
       }));
   }
 
   getProductById(id: string, category: string): Observable<ProductWithId> {
     return this.http.get<ProductWithId>(this.firebaseURL + `/product/${category}/${id}.json`);
+  }
+
+  getProductByCategory(category: string): Observable<ProductWithId[]> {
+    return this.http.get<ProductWithId[]>(this.firebaseURL + `/product/${category}.json`)
+    .pipe(map(product => {
+      return(this.converter(product))
+    }));
   }
 
   addProduct(product: Product): Observable<Product>  {
@@ -46,6 +49,7 @@ export class DataService {
     return this.http.delete<ProductWithId>(this.firebaseURL + `/product/${category}/${id}.json`);
   }
 
+
   getCarts(): Observable<CartWithID[]> {
     return this.http.get<CartWithID[]>(this.firebaseURL + `cart.json`)
       .pipe(map(cart => {
@@ -60,6 +64,27 @@ export class DataService {
   putCart(item: {id: string}): Observable<CartWithID>  {
     return this.http.patch<CartWithID>(this.firebaseURL + `/cart/${item.id}/.json`, item);
   }
+
+  deleteCartById(id: string): Observable<CartWithID>  {
+    return this.http.delete<CartWithID>(this.firebaseURL + `/cart/${id}.json`);
+  }
+
+
+  getMyOrders(): Observable<MyOrderWithID[]> {
+    return this.http.get<MyOrderWithID[]>(this.firebaseURL + `myorder.json`)
+      .pipe(map(myOrder => {
+        return (this.converterMyOrder(myOrder));
+      }));
+  }
+
+  addToMyOrder(item: MyOrder): Observable<MyOrderResponse> {
+    return this.http.post<MyOrderResponse>(this.firebaseURL + `/myorder.json`, item);
+  }
+
+  putMyOrder(item: {id: string}): Observable<MyOrderWithID>  {
+    return this.http.patch<MyOrderWithID>(this.firebaseURL + `/myorder/${item.id}/.json`, item);
+  }
+
 
   private converter( productObj: any ) {
     const products: ProductWithId[] = [];
@@ -78,6 +103,16 @@ export class DataService {
       carts.push( cart );
     });
     return carts;
+
+  }
+
+  private converterMyOrder( myOrderObj: any ) {
+    const myOrders: MyOrderWithID[] = [];
+    Object.keys( myOrderObj ).forEach( key => {
+      const myOrder: MyOrderWithID = myOrderObj[key];
+      myOrders.push( myOrder );
+    });
+    return myOrders;
 
   }
 }

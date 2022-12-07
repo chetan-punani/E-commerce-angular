@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { SignupNewUser, SignUpResponse, Users, UsersWithId } from 'src/app/shared/models/users.model';
 import { AuthService } from 'src/app/shared/service/auth.service';
 import { DataService } from 'src/app/shared/service/data.service';
@@ -13,19 +13,38 @@ export class SignupComponent implements OnInit {
 
   signUpForm!: FormGroup;
 
-  constructor(private authService: AuthService) { }
-
-  ngOnInit(): void {
-    this.initForm();
+  constructor(private authService: AuthService,  private formBuilder: FormBuilder) { 
+    this.signUpForm = this.formBuilder.group({
+      name: new FormControl(null, Validators.required),
+      email: new FormControl(null, [Validators.required, Validators.email]),
+      password: new FormControl(null,[Validators.required, Validators.minLength(6)]),
+      confirmpassword: new FormControl(null, [Validators.required, Validators.minLength(6)]),
+      dob: new FormControl(null, Validators.required),
+    }
+    ,
+      {
+        validators: this.validatingFrom('password', 'confirmpassword')
+      })
   }
 
-  initForm(): void {
-    this.signUpForm = new FormGroup({
-      name: new FormControl(null, Validators.required),
-      email: new FormControl(null, Validators.required),
-      password: new FormControl(null, Validators.required),
-      dob: new FormControl(null, Validators.required),
-    })
+  ngOnInit(): void {
+    
+  }
+
+  validatingFrom(controlName: string, matchingControlName: string) {
+    return (fromGroup: FormGroup) => {
+      const control = fromGroup.controls[controlName];
+      const matchingControl = fromGroup.controls[matchingControlName];
+      if (matchingControl.errors) {
+        return;
+      }
+
+      if (control.value !== matchingControl.value) {
+        matchingControl.setErrors({ MustMatch: true })
+      } else {
+        matchingControl.setErrors(null)
+      }
+    }
   }
 
   signUp(): void {
@@ -58,6 +77,10 @@ export class SignupComponent implements OnInit {
         })
       })
     });
+  }
+
+  resetForm() {
+    this.signUpForm.reset();
   }
 
 }

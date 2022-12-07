@@ -43,12 +43,11 @@ export class UsersComponent implements OnInit {
     this.loadUsers();
   }
 
-  deleteUser(id: string): void {
-    this.authService.deleteUser(id).subscribe((res: UsersWithId) => {
-      console.log('delete :', res)
-      this.loadUsers();
-    });
-   
-  }
+  // deleteUser(id: string): void {
+  //   this.authService.deleteUser(id).subscribe((res: UsersWithId) => {
+  //     console.log('delete :', res)
+  //     this.loadUsers();
+  //   });
+  // }
 
 }

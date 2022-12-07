@@ -115,4 +115,8 @@ export class ActiononUsersComponent implements OnInit {
     this.addUserForm.reset();
   }
 
+  resetForm() {
+    this.addUserForm.reset();
+  }
+
 }

@@ -1,5 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { CartWithID, Product } from 'src/app/shared/models/product.model';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { CartWithID, Product, ProductWithId } from 'src/app/shared/models/product.model';
 import { DataService } from 'src/app/shared/service/data.service';
 
 @Component({
@@ -10,7 +10,8 @@ import { DataService } from 'src/app/shared/service/data.service';
 export class ItemListComponent implements OnInit {
   
   @Input() cartItemVal: CartWithID;
-  productItem: Product;
+  @Output() refreshCartEvent = new EventEmitter<boolean>();
+  productItem: ProductWithId;
 
   constructor(private dataService: DataService) { }
 
@@ -19,9 +20,16 @@ export class ItemListComponent implements OnInit {
     this.getCartItem();
   }
 
-  getCartItem() {
-    this.dataService.getProductById(this.cartItemVal.productId, this.cartItemVal.productCategory).subscribe( (res: Product) => {
+  getCartItem(): void {
+    this.dataService.getProductById(this.cartItemVal.productId, this.cartItemVal.productCategory).subscribe( (res: ProductWithId) => {
       this.productItem = res;
+    })
+  }
+
+  deleteItem(id: string): void {
+    this.dataService.deleteCartById(id).subscribe( (res: CartWithID) => {
+      console.log(res);
+      this.refreshCartEvent.emit(true);
     })
   }
 

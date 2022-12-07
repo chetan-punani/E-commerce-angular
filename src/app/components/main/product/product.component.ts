@@ -1,4 +1,5 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { Product, ProductWithId } from 'src/app/shared/models/product.model';
 import { DataService } from 'src/app/shared/service/data.service';
 
@@ -15,10 +16,12 @@ export class ProductComponent implements OnInit {
   categoryName: string = '';
 
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
+
     for(const key in this.categoryWiseProduct){
+      this.categoryName = this.categoryWiseProduct[key].category
       this.productListArray.push(this.categoryWiseProduct[key]);
     }
   }
@@ -34,6 +37,11 @@ export class ProductComponent implements OnInit {
 
   scrollToRight(): void {
     this.scroller.nativeElement!.scrollLeft += 400;
+  }
+
+  showProductOfCategory(category: string): void {
+    console.log(category)
+    this.router.navigate(['product',category])
   }
 
 }

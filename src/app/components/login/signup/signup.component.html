@@ -1,7 +1,9 @@
 <div class="container-fluid">
     <div class="row main-content bg-success text-center">
         <div class="col-md-4 text-center company__info">
-            <span class="company__logo"><h2><i class="bi bi-shop-window"></i></h2></span>
+            <span class="company__logo">
+                <h2><i class="bi bi-shop-window"></i></h2>
+            </span>
             <h4 class="company_title">B-Commerce</h4>
         </div>
         <div class="col-md-8 col-xs-12 col-sm-12 login_form ">
@@ -13,26 +15,67 @@
                     <form control="" class="form-group" [formGroup]="signUpForm" (ngSubmit)="signUp()">
                         <div class="row">
                             <input type="text" name="name" id="name" class="form__input" placeholder="User Name"
-                            formControlName="name">
+                                formControlName="name">
+                            <span *ngIf="!signUpForm.get('name')?.valid && signUpForm.get('name')?.touched"
+                                class="help-block"> Username is Required!</span>
                         </div>
                         <div class="row">
-                            <input type="email" name="email" id="email" class="form__input" placeholder="Email"  formControlName="email">
+                            <input type="email" name="email" id="email" class="form__input" placeholder="Email"
+                                formControlName="email">
+                            <span *ngIf="!signUpForm.get('email')?.valid && signUpForm.get('email')?.touched"
+                                class="help-block">
+                                <span *ngIf="signUpForm.get('email')?.hasError('required')">
+                                    Emaili is required!
+                                </span>
+                                <span *ngIf="signUpForm.get('email')?.hasError('emailIsForbidden')">
+                                    Please enter a valid email!
+                                </span>
+                            </span>
                         </div>
                         <div class="row">
                             <!-- <span class="fa fa-lock"></span> -->
-                            <input type="password" name="password" id="password" class="form__input" placeholder="Password" 
-                            formControlName="password">
+                            <input type="password" name="password" id="password" class="form__input"
+                                placeholder="Password" formControlName="password">
+                            <span *ngIf="!signUpForm.get('password')?.valid && signUpForm.get('password')?.touched"
+                                class="help-block">
+                                <span *ngIf="signUpForm.get('password')?.hasError('required')">
+                                    password Required!
+                                </span>
+                                <span *ngIf="signUpForm.get('password')?.hasError('minlength')">
+                                    Password must be 6!
+                                </span>
+                            </span>
                         </div>
                         <div class="row">
-                            <input type="password" name="confirmpassword" id="confirmpassword" class="form__input" 
-                            placeholder="Confirm Password">
+                            <input type="password" name="confirmpassword" id="confirmpassword" class="form__input"
+                                placeholder="Confirm Password" formControlName="confirmpassword">
+                            <span
+                                *ngIf="!signUpForm.get('confirmpassword')?.valid && signUpForm.get('confirmpassword')?.touched"
+                                class="help-block">
+                                <span *ngIf="signUpForm.get('confirmpassword')?.hasError('required')">
+                                    confirmpassword Required!
+                                </span>
+                                <span *ngIf="signUpForm.get('confirmpassword')?.hasError('minlength')">
+                                    confirmpassword must be 6!
+                                </span>
+                                <span *ngIf="signUpForm.get('confirmpassword')?.hasError('MustMatch')">
+                                    Password and Conform password did not match!!!
+                                </span>
+                            </span>
                         </div>
                         <div class="row">
-                            <input type="date" name="dateofbirth" id="dateofbirth" class="form__input" placeholder="Date Of irth"
-                            formControlName="dob">
+                            <input type="date" name="dateofbirth" id="dateofbirth" class="form__input"
+                                placeholder="Date Of irth" formControlName="dob">
+                            <span *ngIf="!signUpForm.get('dob')?.valid && signUpForm.get('dob')?.touched"
+                                class="help-block"> Date of Birth is Required!</span>
                         </div>
                         <div class="row">
-                            <input type="submit" value="Sign Up" class="btn">
+                            <div class="col">
+                                <input type="submit" value="Sign Up" class="btn" [disabled]="!signUpForm.valid">
+                            </div>
+                            <div class="col">
+                                <input type="button" value="Reset" class="btn" (click)="resetForm()">
+                            </div>
                         </div>
                     </form>
                 </div>

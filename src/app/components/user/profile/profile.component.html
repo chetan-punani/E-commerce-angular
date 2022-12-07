@@ -6,20 +6,46 @@
             </div>
             <div class="container">
                 <div class="row">
-                    <form control="" class="form-group">
+                    <form control="" class="form-group" [formGroup]="addUserForm" (ngSubmit)="addUser()">
                         <div class="row">
-                            <input type="text" name="name" id="name" class="form__input" placeholder="User Name">
+                            <input type="text" name="name" id="name" class="form__input" placeholder="User Name"
+                            formControlName="name">
+                            <span *ngIf="!addUserForm.get('name')?.valid && addUserForm.get('name')?.touched"
+                                class="help-block"> Username is Required!</span>
                         </div>
                         <div class="row">
-                            <input type="email" name="email" id="email" class="form__input" placeholder="Email">
+                            <input type="email" name="email" id="email" class="form__input" placeholder="Email"
+                            formControlName="email">
+                            <span *ngIf="!addUserForm.get('email')?.valid && addUserForm.get('email')?.touched"
+                            class="help-block">
+                            <span *ngIf="addUserForm.get('email')?.hasError('required')">
+                                Emaili is required!
+                            </span>
+                            <span *ngIf="addUserForm.get('email')?.hasError('emailIsForbidden')">
+                                Please enter a valid email!
+                            </span>
+                        </span>
                         </div>
                         <div class="row">
                             <!-- <span class="fa fa-lock"></span> -->
-                            <input type="password" name="password" id="password" class="form__input" placeholder="Password">
+                            <input type="password" name="password" id="password" class="form__input" placeholder="Password"
+                            formControlName="password">
+                            <span *ngIf="!addUserForm.get('password')?.valid && addUserForm.get('password')?.touched"
+                            class="help-block">
+                            <span *ngIf="addUserForm.get('password')?.hasError('required')">
+                                password Required!
+                            </span>
+                            <span *ngIf="addUserForm.get('password')?.hasError('minlength')">
+                                Password must be 6!
+                            </span>
+                        </span>
                         </div>
         
                         <div class="row">
-                            <input type="date" name="dateofbirth" id="dateofbirth" class="form__input" placeholder="Date Of Birth">
+                            <input type="date" name="dob" id="dob" class="form__input" placeholder="Date Of Birth"
+                            formControlName="dob">
+                            <span *ngIf="!addUserForm.get('dob')?.valid && addUserForm.get('dob')?.touched"
+                            class="help-block"> Date of Birth is Required!</span>
                         </div>
                         <div class="row d-flex justify-content-center">
                             <input type="submit" value="Update" class="btn">

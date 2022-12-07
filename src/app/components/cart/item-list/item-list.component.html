@@ -16,9 +16,19 @@
                             </div>
 
                             <div class="col">
-                                <div class="card-body">
-                                    <h6 class="card-title">{{ productItem.name }}</h6>
-                                    <p>From {{ productItem.price }}</p>
+                                <div class="row">
+                                    <div class="card-body">
+                                        <h6 class="card-title">{{ productItem.name }}</h6>
+                                        <p>{{productItem.description}}</p>
+                                        <p>From {{ productItem.price }}</p>
+                                        <p>{{productItem.stock}}</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div>
+                                        <button type="button" class="btn btn-danger"
+                                        (click)="deleteItem(cartItemVal.id)">Delete <i class="bi bi-trash"></i></button>
+                                    </div>
                                 </div>
                             </div>
                         </div>

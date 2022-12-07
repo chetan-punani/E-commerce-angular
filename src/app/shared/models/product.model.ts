@@ -37,3 +37,21 @@ export interface CartWithID{
     productCategory: string;
     userEmail: string;
 }
+
+export interface MyOrder{
+    order: CartWithID[] 
+    userEmail: string;
+}
+
+export interface MyOrderResponse{
+    order: CartWithID[] 
+    userEmail: string;
+    name: string;
+}
+
+export interface MyOrderWithID{
+    id: string;
+    order: CartWithID[] 
+    userEmail: string;
+}
+

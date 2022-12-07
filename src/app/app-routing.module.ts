@@ -12,6 +12,7 @@ import { MyorderComponent } from './components/user/myorder/myorder.component';
 import { DashboardComponent } from './components/admin/dashboard/dashboard.component';
 import { AuthGuardGuard } from './shared/guard/auth-guard.guard';
 import { AdminGuard } from './shared/guard/admin.guard';
+import { ShowproductComponent } from './components/shared/showproduct/showproduct.component';
 
 const routes: Routes = [
   {
@@ -46,6 +47,10 @@ const routes: Routes = [
       {
         path:':category',
         children: [
+          {
+            path: '',
+            component: ShowproductComponent,
+          },
           {
             path: ':id',
             component: ProductViewComponent

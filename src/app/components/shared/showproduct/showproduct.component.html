@@ -1,6 +1,6 @@
-<div class="p-1" >
-    <div class="row m-2" *ngFor="let product of productListFiltered; let i = index">
-        <div (click)="showProduct(product.id, product.category)">
+<div class="p-1" *ngIf="showProduct">
+    <div class="row m-2" *ngFor="let product of showProduct; let i = index">
+        <div>
             <div class="col-2" >
             </div >
             
@@ -26,7 +26,7 @@
                                         </div>
                                         <div class="col-4">
                                             <div class="card-body">
-                                                <p>From {{product.price}}</p>
+                                                <p>From {{ product.price }}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -35,10 +35,10 @@
                                             <button type="button" class="btn btn-primary" id="product-view-btn"
                                             (click)="addToCartProduct(product.id, product.category)">Add To Cart</button>
                                         </div>
-                                        <div class="col"> 
+                                        <!-- <div class="col"> 
                                             <button type="button" class="btn btn-primary" id="product-view-btn"
-                                        >Buy Now</button>
-                                        </div>
+                                            (click)="placeOrder(product.id, product.category)">Buy Now</button>
+                                        </div> -->
                                     </div>
                                 </div>
                                

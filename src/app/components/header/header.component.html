@@ -13,16 +13,22 @@
     </li>
     <li class="nav-item">
       <a class="nav-link" routerLink="cart" routerLinkActive="active">
-        <b>Cart <i class="bi bi-cart"></i></b></a>
+        <b>Cart <i class="bi bi-cart"></i></b>
+        <span class="badge badge-light">{{ cartCount }}</span>
+      </a>
     </li>
-    <li class="nav-item dropdown">
+    <li class="nav-item dropdown" *ngIf="showLogIn">
       <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-        <b>User Name <i class="bi bi-person-circle"></i></b>
+        <b>{{logedInUserEmail}} <i class="bi bi-person-circle"></i></b>
       </a>
       <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
         <li><a class="dropdown-item" routerLink="profile" routerLinkActive="active">Profile</a></li>
         <li><a class="dropdown-item" routerLink="my-orders" routerLinkActive="active">My Orders</a></li>
         <li><a class="dropdown-item" routerLink="logout" routerLinkActive="active" (click)="logout()">Logout</a></li>
       </ul>
+    </li>
+    <li class="nav-item" *ngIf="!showLogIn">
+      <a class="nav-link" routerLink="login" routerLinkActive="active">
+        <b>LogIn <i class="bi bi-box-arrow-in-right"></i></b></a>
     </li>
 </ul>

@@ -48,7 +48,12 @@
                             class="help-block"> Category is Required!</span>
                         </div>
                         <div class="row d-flex justify-content-center">
-                            <input type="submit" value="{{!isShow ? 'Add Product' : 'Edit Product'}}" class="btn" [disabled]="!addProductForm.valid">
+                            <div class="col">
+                                <input type="submit" value="{{!isShow ? 'Add Product' : 'Edit Product'}}" class="btn" [disabled]="!addProductForm.valid">
+                            </div>
+                            <div class="col">
+                                <input type="button" value="Reset" class="btn" (click)="resetForm()">
+                            </div>
                         </div>
                     </form>
                 </div>
