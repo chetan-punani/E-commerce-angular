@@ -1,0 +1,44 @@
+<div class="p-1" *ngIf="myOrdersItem">
+    <div class="row m-3"  *ngFor="let product of showOrderItem; let i = index">
+        <div class="col-2">
+        </div>
+        <div class="col-8">
+            <div class="card">
+                <div class="card-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-4">
+                                <div>
+                                    <img src="https://assets.entrepreneur.com/content/3x2/2000/20171212213121-apple-website.jpeg"
+                                        class="card-img-top" alt="...">
+                                </div>
+                            </div>
+
+                            <div class="col-4">
+                                <div class="card-body">
+                                    <h6 class="card-title">{{ product.name }}</h6>
+                                </div>
+
+                            </div>
+                            <div class="col-4">
+                                <div class="card-body">
+                                    <p>From {{ product.price }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-2"></div>
+    </div>
+    <div class="card" *ngIf="showOrderItem.length === 0">
+        <div class="card-body">
+            <div class="container">
+                <div class="alert alert-danger" role="alert">
+                    Your Order is Empty Or You have't place any orders!
+                  </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,8 @@
+<div class="p-1">
+    <app-carousel></app-carousel>
+    <div class="m-2">
+        <div class="col" *ngFor="let p of productList; let i = index">
+            <app-product [categoryWiseProduct]="p"></app-product>
+        </div>
+    </div>
+</div>

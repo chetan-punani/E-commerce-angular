@@ -1,0 +1,63 @@
+<div class="p-1">
+    <div class="card">
+        <div class="card-body">
+            <div class="card-title  d-flex justify-content-center">
+                <h2>Add Product</h2>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <form control="" class="form-group" [formGroup]="addProductForm" (ngSubmit)="addProduct()">
+                        <div class="row">
+                            <input type="text" name="name" id="name" class="form__input" placeholder="Name"
+                                formControlName="name">
+                            <span *ngIf="!addProductForm.get('name')?.valid && addProductForm.get('name')?.touched"
+                                class="help-block"> Item Name is Required!</span>
+                        </div>
+                        <div class="row">
+                            <input type="file" name="image" id="image" class="form__input"
+                                placeholder="Image (Optional)">
+                        </div>
+                        <div class="row">
+                            <input type="textarea" name="description" id="description" class="form__input"
+                                placeholder="Description" formControlName="description">
+                                <span *ngIf="!addProductForm.get('description')?.valid && addProductForm.get('description')?.touched"
+                                class="help-block"> Description is Required!</span>
+                        </div>
+
+                        <div class="row">
+                            <input type="number" name="price" id="price" class="form__input" placeholder="Price"
+                                formControlName="price">
+                                <span *ngIf="!addProductForm.get('price')?.valid && addProductForm.get('price')?.touched"
+                                class="help-block"> Price is Required!</span>
+                        </div>
+                        <div class="row">
+                            <input type="number" name="stock" id="stock" class="form__input" placeholder="No Of Item"
+                                formControlName="stock">
+                                <span *ngIf="!addProductForm.get('stock')?.valid && addProductForm.get('stock')?.touched"
+                                class="help-block"> Stock is Required!</span>
+                        </div>
+                        <div class="row">
+                            <input type="text" name="category" form="category" id="category" class="form__input"
+                                placeholder="Category" formControlName="category" list="categoryList">
+                            <datalist id="categoryList">
+                                <option value="Electronic">Electronic</option>
+                                <option value="Cloths">Cloths</option>
+                                <option value="Sports">Sports</option>
+                            </datalist>
+                            <span *ngIf="!addProductForm.get('category')?.valid && addProductForm.get('category')?.touched"
+                            class="help-block"> Category is Required!</span>
+                        </div>
+                        <div class="row d-flex justify-content-center">
+                            <div class="col">
+                                <input type="submit" value="{{!isShow ? 'Add Product' : 'Edit Product'}}" class="btn" [disabled]="!addProductForm.valid">
+                            </div>
+                            <div class="col">
+                                <input type="button" value="Reset" class="btn" (click)="resetForm()">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

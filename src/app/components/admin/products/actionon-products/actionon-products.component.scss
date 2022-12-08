@@ -1,0 +1,65 @@
+$color_1: #fff;
+$color_2: rgb(0, 166, 255);
+$background-color_1: rgb(0, 166, 255);
+$background-color_2: #fff;
+$border-bottom-color_1: rgb(0, 166, 255);
+
+.row {
+	>h2 {
+		color: $color_2;
+	}
+}
+
+.card-title {
+	color: $color_2;
+}
+form {
+	padding: 0 2em;
+}
+.form__input {
+	width: 70%;
+	border: 0px solid transparent;
+	border-radius: 0;
+	border-bottom: 1px solid #aaa;
+	padding: 1em .5em .5em;
+	padding-left: 2em;
+	outline: none;
+	margin: 1.5em auto;
+	transition: all .5s ease;
+	&:focus {
+		border-bottom-color: $border-bottom-color_1;
+		box-shadow: 0 0 5px rgb(0, 166, 255);
+		border-radius: 4px;
+	}
+}
+.btn {
+	transition: all .5s ease;
+	width: 20%;
+	border-radius: 30px;
+	color: $color_2;
+	font-weight: 600;
+	background-color: $background-color_2;
+	border: 1px solid rgb(0, 166, 255);
+	margin-top: 1.5em;
+	margin-bottom: 1em;
+	&:hover {
+		background-color: $background-color_1;
+		color: $color_1;
+	}
+	&:focus {
+		background-color: $background-color_1;
+		color: $color_1;
+	}
+}
+
+input.ng-invalid.ng-touched {
+    border: 1px solid red;
+}
+
+.help-block {
+	color: red;
+	margin-left: 10em;
+}
+
+
+

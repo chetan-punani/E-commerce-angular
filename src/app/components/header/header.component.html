@@ -1,0 +1,48 @@
+<ul class="nav justify-content-between">
+    <li class="nav-item">
+      <a class="nav-link" routerLink="" routerLinkActive="active">
+        <b>B-commerce <i class="bi bi-shop-window"></i></b>
+    </a>
+    </li>
+    <li class="nav-item">
+      <app-searchbar></app-searchbar>
+    </li>
+     <li class="nav-item">
+      <a class="nav-link" routerLink="admin" routerLinkActive="active" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        <b>Seller <i class="bi bi-person-gear"></i></b></a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" routerLink="cart" routerLinkActive="active">
+        <b>Cart <i class="bi bi-cart"></i></b>
+        <span class="badge badge-light" *ngIf="cartCount > 0">{{ cartCount }}</span>
+      </a>
+    </li>
+    <li class="nav-item dropdown" *ngIf="showLogIn">
+      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <b>{{logedInUserEmail}} <i class="bi bi-person-circle"></i></b>
+      </a>
+      <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+        <li><a class="dropdown-item" routerLink="profile" routerLinkActive="active">Profile</a></li>
+        <li><a class="dropdown-item" routerLink="my-orders" routerLinkActive="active">My Orders</a></li>
+        <li><a class="dropdown-item" routerLink="logout" routerLinkActive="active" (click)="logout()">Logout</a></li>
+      </ul>
+    </li>
+    <li class="nav-item" *ngIf="!showLogIn">
+      <a class="nav-link" routerLink="login" routerLinkActive="active">
+        <b>LogIn <i class="bi bi-box-arrow-in-right"></i></b></a>
+    </li>
+</ul>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" *ngIf="!isAdmin">
+  <div class="modal-dialog">
+    <div class="modal-content text-bg-danger p-3">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Warning</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        You are not right person to access this section OR You have to admin access.
+      </div>
+    </div>
+  </div>
+</div>

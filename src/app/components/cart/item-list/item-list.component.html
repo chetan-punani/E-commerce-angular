@@ -1,0 +1,41 @@
+
+<div class="p-1">
+    <div class="row" *ngIf="productItem">
+        <div class="col-2">
+        </div>
+        <div class="col-8">
+            <div class="card">
+                <div class="card-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <div style="min-width: 8rem;">
+                                    <img src="https://assets.entrepreneur.com/content/3x2/2000/20171212213121-apple-website.jpeg"
+                                        class="card-img-top" alt="...">
+                                </div>
+                            </div>
+
+                            <div class="col">
+                                <div class="row">
+                                    <div class="card-body">
+                                        <h6 class="card-title">{{ productItem.name }}</h6>
+                                        <p>{{productItem.description}}</p>
+                                        <p>From {{ productItem.price | currency:'INR' }}</p>
+                                        <p>{{productItem.stock}}</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div>
+                                        <button type="button" class="btn btn-danger"
+                                        (click)="deleteItem(cartItemVal.id)">Delete <i class="bi bi-trash"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-2"></div>
+</div>

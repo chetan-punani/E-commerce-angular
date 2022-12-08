@@ -1,0 +1,33 @@
+<div class="p-1">
+    <div class="card">
+        <div class="card-body">
+            <div class="container">
+                <div class="row">
+                    <div class="col-2 d-flex align-items-center">
+                        <div>
+                            <div class="row">
+                                <h6>{{ categoryName }} Items</h6>
+                            </div>
+                            <div class="row">
+                                <button type="button" class="btn btn-primary" id="product-view-btn" (click)="showProductOfCategory(categoryName)">View All</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-10">
+                        <div class="row">
+                            <drag-scroll #scroller [scroll-x-wheel-enabled]="true">
+                                <div class="col" *ngFor="let p of productListArray; let i = index" drag-scroll-item>
+                                    <div class="product">
+                                        <app-product-list [singleProduct]="p">
+                                        </app-product-list>
+                                    </div>
+                                </div>
+                            </drag-scroll>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
