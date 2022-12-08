@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { CartWithID, MyOrder, MyOrderResponse, MyOrderWithID } from 'src/app/shared/models/product.model';
-import { AuthService } from 'src/app/shared/service/auth.service';
+import { CartWithID, MyOrder, MyOrderResponse, MyOrderWithID, ProductWithId } from 'src/app/shared/models/product.model';
 import { DataService } from 'src/app/shared/service/data.service';
-import { UsersComponent } from '../admin/users/users.component';
 
 @Component({
   selector: 'app-cart',
@@ -25,15 +23,13 @@ export class CartComponent implements OnInit {
 
   getCart() {
     this.cardItem = [];
-    let userlocal = localStorage.getItem('token');
+    let userlocal = this.dataService.getLocalStorageUser();
     if(userlocal) {
-      let User = JSON.parse(userlocal); 
-      this.logedInUserEmail = User.email;
+      this.logedInUserEmail = userlocal.email;
       this.dataService.getCarts().subscribe( (res: CartWithID[]) => {
-        console.log('get cart-', res)
         if(res.length > 0) {
           this.cardItem = res.filter( (res: CartWithID) => {
-            return (res.userEmail === User.email);
+            return (res.userEmail === userlocal.email);
           });
         } 
       })
@@ -52,22 +48,42 @@ export class CartComponent implements OnInit {
       userEmail: this.logedInUserEmail
     }
     this.dataService.addToMyOrder(myOrder).subscribe( (res: MyOrderResponse) => {
-      console.log(res)
       
       const orderID = {
         id: res.name
       }
 
       this.dataService.putMyOrder(orderID).subscribe((res: MyOrderWithID) => {
-        console.log("update cart", res)
 
-        this.cardItem.forEach( (res: CartWithID) => {
-          console.log(res.id)
-          this.dataService.deleteCartById(res.id).subscribe( (res: CartWithID) => {
-            console.log(res);
+        this.cardItem.forEach( (item: CartWithID) => {
+
+          this.dataService.deleteCartById(item.id).subscribe( (res: CartWithID) => {
+
+            this.dataService.getProductById(item.productId, item.productCategory).subscribe( (product: ProductWithId) => {
+              let updateStock: number = product.stock;
+  
+              if(updateStock > 0) {
+                updateStock = updateStock - 1;
+              } else if (updateStock === 0) {
+                updateStock = updateStock;
+              }
+              
+              const tempProduct : ProductWithId = {
+                name: product.name,
+                description: product.description,
+                price: product.price,
+                stock: updateStock,
+                category: product.category,
+                id: product.id
+              }
+   
+              this.dataService.updateProduct(tempProduct, product.id).subscribe( (stockUpdateRes: ProductWithId) => {
+
+                this.router.navigate(['my-orders'])
+              })
+            })
           })
         })
-        this.router.navigate(['my-orders'])
       });
     })
   }

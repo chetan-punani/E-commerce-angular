@@ -16,9 +16,7 @@ export class AdminGuard implements CanActivate {
       let user = localStorage.getItem('token');
       if (user) {
         let User = JSON.parse(user);
-        console.log('')
         if(User.email === 'admin@gmail.com') {
-          console.log('admin access');
           return true;
         }
       }

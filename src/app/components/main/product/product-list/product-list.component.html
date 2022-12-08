@@ -4,7 +4,8 @@
           <img src="https://assets.entrepreneur.com/content/3x2/2000/20171212213121-apple-website.jpeg" class="card-img-top" alt="...">
           <div class="card-body">
             <h6 class="card-title">{{p.name}}</h6>
-            <p class="card-price">Price {{p.price}}</p>
+            <p class="card-price">Price  {{p.price | currency:'INR'}}</p>
+            <h6 *ngIf="outOfStock === 0" class="out-of-stock">Out Of Stock</h6>
           </div>
         </div>
       </div>

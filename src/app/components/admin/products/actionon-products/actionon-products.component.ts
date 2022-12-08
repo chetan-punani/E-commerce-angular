@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { Product, ProductWithId } from 'src/app/shared/models/product.model';
 import { DataService } from 'src/app/shared/service/data.service';
 
@@ -15,6 +14,7 @@ export class ActiononProductsComponent implements OnInit, OnDestroy {
   @Input() productID: string;
   @Input() productCategory: string;
   isShow: boolean = false;
+  @Output() addProductEvent = new EventEmitter<boolean>();
 
   constructor(private dataService: DataService, private formBuilder: FormBuilder) { 
     this.addProductForm = this.formBuilder.group({
@@ -27,21 +27,16 @@ export class ActiononProductsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    console.log('from child: ', this.productID, this.productCategory)
     if (this.productID && this.productCategory) {
       this.fillProductDetails();
       this.isShow = !this.isShow;
     } else {
       this.addProductForm.reset()
     }
-
   }
-
- 
 
   fillProductDetails() {
     this.dataService.getProductById(this.productID, this.productCategory).subscribe((res: ProductWithId) => {
-      console.log('res data:', res);
       this.addProductForm = new FormGroup({
         name: new FormControl(res.name),
         description: new FormControl(res.description),
@@ -62,9 +57,7 @@ export class ActiononProductsComponent implements OnInit, OnDestroy {
     }
 
     if (!this.isShow) {
-
       this.dataService.addProduct(newProduct).subscribe((res: Product) => {
-        console.log("add product", res)
 
         const addID = {
           id: res.name,
@@ -72,12 +65,12 @@ export class ActiononProductsComponent implements OnInit, OnDestroy {
         }
 
         this.dataService.putProduct(addID).subscribe((res: ProductWithId) => {
-          console.log("update product", res)
+          this.addProductEvent.emit(true);
         });
       });
     } else {
       this.dataService.updateProduct(newProduct, this.productID).subscribe((res: ProductWithId) => {
-        console.log("add product", res)
+        this.addProductEvent.emit(true);
       });
     }
     this.addProductForm.reset();

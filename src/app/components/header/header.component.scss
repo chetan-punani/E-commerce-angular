@@ -1,15 +1,17 @@
 .nav {
-    background-color: rgb(0, 166, 255);
-    .nav-item {
-        .nav-link {
-            color: white;
-        }
+  background-color: rgb(0, 166, 255);
+  .nav-item {
+    .nav-link {
+      color: white;
     }
+  }
 }
 
 .badge {
-    position: relative;
-    top: -10px;
-    left: -5px;
-    border-radius: 50%;
-   }
+  position: relative;
+  top: -10px;
+  left: -5px;
+  border-radius: 50%;
+}
+
+$modal-backdrop-bg: rgb(219, 52, 52);

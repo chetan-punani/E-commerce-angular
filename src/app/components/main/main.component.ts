@@ -16,7 +16,6 @@ export class MainComponent implements OnInit {
   ngOnInit(): void {
     this.dataService.getProduct().subscribe((product: Product[]) => {
       if (product) {
-        console.log(product)
         this.productList = product;
       }
     })

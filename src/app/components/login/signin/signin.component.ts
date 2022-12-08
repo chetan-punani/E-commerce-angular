@@ -21,7 +21,6 @@ export class SigninComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    
   }
 
  
@@ -33,7 +32,6 @@ export class SigninComponent implements OnInit {
     }
 
     this.authService.signIn(user).subscribe((userResponse: SignUpResponse) =>{
-      console.log("Signed In User", userResponse);
       this.authService.userSubject.next(userResponse);
       this.authService.user = userResponse;
       localStorage.setItem("token",JSON.stringify(this.authService.user));

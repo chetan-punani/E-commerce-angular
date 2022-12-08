@@ -26,19 +26,23 @@
                                         </div>
                                         <div class="col-4">
                                             <div class="card-body">
-                                                <p>From {{product.price}}</p>
+                                                <p>Price  {{product.price | currency:'INR'}}</p>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row">
+                                        <h6 *ngIf="product.stock === 0" class="out-of-stock">Out Of Stock</h6>
+                                    </div>
+                                    <div class="row">
                                         <div class="col"> 
                                             <button type="button" class="btn btn-primary" id="product-view-btn"
-                                            (click)="addToCartProduct(product.id, product.category)">Add To Cart</button>
+                                            (click)="addToCartProduct(product.id, product.category)"
+                                            *ngIf="product.stock > 0">Add To Cart</button>
                                         </div>
-                                        <div class="col"> 
+                                        <!-- <div class="col"> 
                                             <button type="button" class="btn btn-primary" id="product-view-btn"
                                         >Buy Now</button>
-                                        </div>
+                                        </div> -->
                                     </div>
                                 </div>
                                

@@ -12,7 +12,8 @@
                                     <div class="row">
                                         <div class="col"> 
                                             <button type="button" class="btn btn-primary" id="product-view-btn"
-                                            (click)="addToCartProduct(product.id, product.category)">Add To Cart</button>
+                                            (click)="addToCartProduct(product.id, product.category)"
+                                            *ngIf="outOfStock > 0">Add To Cart</button>
                                         </div>
                                         <!-- <div class="col"> 
                                             <button type="button" class="btn btn-primary" id="product-view-btn"
@@ -26,7 +27,15 @@
                     <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
                         <div class="row" >
                             <h3 class="card-title">{{ product.name }}</h3>
-                            <h5>From {{ product.price }}</h5>
+                        </div>
+                        <div class="row">
+                            <h6>{{ product.description }}</h6>
+                        </div>
+                        <div class="row">
+                            <h5>Price  {{ product.price | currency:'INR' }}</h5>
+                        </div>
+                        <div class="row">
+                            <h6 *ngIf="outOfStock === 0" class="out-of-stock">Out Of Stock</h6>
                         </div>
                     </div>
                 </div>

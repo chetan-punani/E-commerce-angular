@@ -55,3 +55,9 @@ export interface MyOrderWithID{
     userEmail: string;
 }
 
+export interface MyOrderItem {
+    id: string;
+    name: string;
+    price: number;
+}
+

@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AngularFireDatabase, AngularFireList } from '@angular/fire/compat/database';
 import { map, Observable, Subject } from 'rxjs';
 import { Cart, CartResponse, CartWithID, MyOrder, MyOrderResponse, MyOrderWithID, Product, ProductWithId } from '../models/product.model';
+
 
 @Injectable({
   providedIn: 'root'
@@ -85,6 +85,13 @@ export class DataService {
     return this.http.patch<MyOrderWithID>(this.firebaseURL + `/myorder/${item.id}/.json`, item);
   }
 
+  getLocalStorageUser(): any {
+    let user = localStorage.getItem('token');
+    if (user) {
+      let User = JSON.parse(user);
+      return User;
+    }    
+  }
 
   private converter( productObj: any ) {
     const products: ProductWithId[] = [];
@@ -98,6 +105,7 @@ export class DataService {
 
   private converterCart( cartObj: any ) {
     const carts: CartWithID[] = [];
+    if(cartObj = null)
     Object.keys( cartObj ).forEach( key => {
       const cart: CartWithID = cartObj[key];
       carts.push( cart );

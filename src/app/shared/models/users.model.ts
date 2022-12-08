@@ -30,3 +30,14 @@ export interface UsersWithId {
   dob: Date;
   id: string;
 }
+
+export interface localStorageResponse {
+  displayName: string;
+  email: string;
+  expiresIn: string;
+  idToken: string;
+  kind: string;
+  localId: string;
+  refreshToken: string;
+  registered: boolean;
+}

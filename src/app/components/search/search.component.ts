@@ -13,6 +13,7 @@ export class SearchComponent implements OnInit {
   productList: ProductWithId[] = [];
   productListFiltered: ProductWithId[] = [];
   searchTxt: any; // { [key: string]: string }
+  outOfStock: number;
 
   constructor(private route: ActivatedRoute, private dataService: DataService, private router: Router) { 
     this.loadData();
@@ -20,7 +21,6 @@ export class SearchComponent implements OnInit {
 
   ngOnInit(): void {
     this.searchTxt = this.route.snapshot.queryParams['search']
-    console.log(this.route.snapshot.queryParams['search'])
   }
 
   loadData(): void {
@@ -33,16 +33,15 @@ export class SearchComponent implements OnInit {
             this.productList.push(ele);
           });
         });
+        this.filterData();
       }
-      this.filterData();
     })
   }
 
   filterData() {
     this.productListFiltered = this.productList.filter((value: Product) => {
-      return ( (value.name.toLowerCase()).includes(this.searchTxt.toLowerCase()))
+      return ((value.name.toLowerCase().replace(/\s/g, '')).includes(this.searchTxt.toLowerCase().replace(/\s/g, '')))
     })
-    console.log(this.productListFiltered)
   }
 
   showProduct(id: string , category: string) {
@@ -50,11 +49,9 @@ export class SearchComponent implements OnInit {
   }
 
   addToCartProduct(id: string, category: string) {
-    let userlocal = localStorage.getItem('token');
+    let userlocal = this.dataService.getLocalStorageUser();
     if (userlocal) {
-      let User = JSON.parse(userlocal);
-      // console.log(User.email)
-      const email: string = User.email;
+      const email: string = userlocal.email;
       if (email) {
         const item: Cart = {
           productId: id,
@@ -62,14 +59,12 @@ export class SearchComponent implements OnInit {
           userEmail: email,
         }
         this.dataService.addToCart(item).subscribe((res: CartResponse) => {
-          console.log(res)
 
           const itemID = {
             id: res.name,
           }
 
           this.dataService.putCart(itemID).subscribe((res: CartWithID) => {
-            console.log("update cart", res)
             this.router.navigate(['cart'])
           });
         })

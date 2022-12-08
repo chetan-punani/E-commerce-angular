@@ -30,6 +30,15 @@
                 </div>
             </div>
         </div>
+        <div class="col-2"></div>
     </div>
-    <div class="col-2"></div>
+    <div class="card" *ngIf="showOrderItem.length === 0">
+        <div class="card-body">
+            <div class="container">
+                <div class="alert alert-danger" role="alert">
+                    Your Order is Empty Or You have't place any orders!
+                  </div>
+            </div>
+        </div>
+    </div>
 </div>

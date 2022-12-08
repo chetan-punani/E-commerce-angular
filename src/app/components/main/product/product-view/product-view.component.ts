@@ -15,32 +15,28 @@ export class ProductViewComponent implements OnInit {
   category: string = '';
   id: string = '';
   product: ProductWithId;
+  outOfStock: number;
 
-  constructor(private route: ActivatedRoute, private dataService: DataService, private router: Router
-    , private authService: AuthService) { }
+
+  constructor(private route: ActivatedRoute, private dataService: DataService, private router: Router) { }
 
   ngOnInit() {
-    // console.log("queryparams:", this.route.snapshot.params['category'])
-    // console.log("queryparams:", this.route.snapshot.params['id'])
     this.category = this.route.snapshot.params['category'];
     this.id = this.route.snapshot.params['id'];
     this.fetchProductById();
-    // console.log('valu -',this.product)
   }
 
   fetchProductById() {
     this.dataService.getProductById(this.id, this.category).subscribe((res: ProductWithId) => {
-      console.log(res)
       this.product = res;
+      this.outOfStock = this.product.stock;
     });
   }
 
   addToCartProduct(id: string, category: string) {
-    let userlocal = localStorage.getItem('token');
+    let userlocal = this.dataService.getLocalStorageUser();
     if (userlocal) {
-      let User = JSON.parse(userlocal);
-      // console.log(User.email)
-      const email: string = User.email;
+      const email: string = userlocal.email;
       if (email) {
         const item: Cart = {
           productId: id,
@@ -48,14 +44,12 @@ export class ProductViewComponent implements OnInit {
           userEmail: email,
         }
         this.dataService.addToCart(item).subscribe((res: CartResponse) => {
-          console.log(res)
 
           const itemID = {
             id: res.name,
           }
 
           this.dataService.putCart(itemID).subscribe((res: CartWithID) => {
-            console.log("update cart", res)
             this.router.navigate(['cart'])
           });
         })
@@ -63,7 +57,5 @@ export class ProductViewComponent implements OnInit {
     }  else {
       this.router.navigate(['login'])
     }
-
   }
-
 }

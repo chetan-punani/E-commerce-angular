@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { CartWithID, MyOrderWithID, ProductWithId } from 'src/app/shared/models/product.model';
+import { MyOrderWithID, ProductWithId } from 'src/app/shared/models/product.model';
 import { DataService } from 'src/app/shared/service/data.service';
 
 @Component({
@@ -22,35 +22,27 @@ export class MyorderComponent implements OnInit {
 
   getMyOrders(): void {
     this.myOrdersItem = [];
-    let userlocal = localStorage.getItem('token');
+    let userlocal = this.dataService.getLocalStorageUser();
     if(userlocal) {
-      let User = JSON.parse(userlocal); 
-      this.logedInUserEmail = User.email;
+      this.logedInUserEmail = userlocal.email;
 
       this.dataService.getMyOrders().subscribe( (res: MyOrderWithID[]) => {
-        console.log('get orders-', res)
         
         this.myOrdersItem = res.filter( (res: MyOrderWithID) => {
-          return (res.userEmail === User.email);
+          return (res.userEmail === userlocal.email);
         });
 
         this.myOrdersItem.forEach( (item: MyOrderWithID) => {
           if(item.order) {
             item.order.forEach( (order) => {
               this.dataService.getProductById(order.productId, order.productCategory).subscribe( (res: ProductWithId) => {
-                console.log(res)
                 this.showOrderItem.push(res);
               })
             })
           }
          
         })
-
-        
-        console.log(this.myOrdersItem)
       })
-
     }
   }
-
 }

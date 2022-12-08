@@ -5,20 +5,13 @@
                 <th>OrderId</th>
                 <th>Item Name</th>
                 <th>Price</th>
-                <!-- <th>Action</th> -->
             </tr>
         </thead>
         <tbody>
             <tr *ngFor="let order of myOrdersItem; let i = index">
                 <td>{{ order.id }}</td>
                 <td>{{ order.name }}</td>
-                <td>{{ order.price }}</td>
-                <!-- <td>
-                    <div class="d-flex">
-                        <button type="button" class="btn btn-success m-1">VIew</button>
-                        <button type="button" class="btn btn-danger m-1">delete</button>
-                    </div>
-                </td> -->
+                <td>{{ order.price | currency:'INR' }}</td>
             </tr>
         </tbody>
     </table>

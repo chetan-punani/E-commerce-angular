@@ -8,13 +8,13 @@
       <app-searchbar></app-searchbar>
     </li>
      <li class="nav-item">
-      <a class="nav-link" routerLink="admin" routerLinkActive="active">
+      <a class="nav-link" routerLink="admin" routerLinkActive="active" data-bs-toggle="modal" data-bs-target="#exampleModal">
         <b>Seller <i class="bi bi-person-gear"></i></b></a>
     </li>
     <li class="nav-item">
       <a class="nav-link" routerLink="cart" routerLinkActive="active">
         <b>Cart <i class="bi bi-cart"></i></b>
-        <span class="badge badge-light">{{ cartCount }}</span>
+        <span class="badge badge-light" *ngIf="cartCount > 0">{{ cartCount }}</span>
       </a>
     </li>
     <li class="nav-item dropdown" *ngIf="showLogIn">
@@ -32,3 +32,17 @@
         <b>LogIn <i class="bi bi-box-arrow-in-right"></i></b></a>
     </li>
 </ul>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" *ngIf="!isAdmin">
+  <div class="modal-dialog">
+    <div class="modal-content text-bg-danger p-3">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Warning</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        You are not right person to access this section OR You have to admin access.
+      </div>
+    </div>
+  </div>
+</div>

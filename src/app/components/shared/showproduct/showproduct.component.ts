@@ -24,15 +24,13 @@ export class ShowproductComponent implements OnInit {
   getProducts(): void {
     this.dataService.getProductByCategory(this.productCategory).subscribe( (res: ProductWithId[]) => {
       this.showProduct = res;
-      console.log('aolgisfhdjewqnasfulhbd',this.showProduct)
     })
   }
 
   addToCartProduct(id: string, category: string) {
-    let userlocal = localStorage.getItem('token');
+    let userlocal = this.dataService.getLocalStorageUser();
     if (userlocal) {
-      let User = JSON.parse(userlocal);
-      const email: string = User.email;
+      const email: string = userlocal.email;
       if (email) {
         const item: Cart = {
           productId: id,
@@ -40,14 +38,12 @@ export class ShowproductComponent implements OnInit {
           userEmail: email,
         }
         this.dataService.addToCart(item).subscribe((res: CartResponse) => {
-          console.log(res)
 
           const itemID = {
             id: res.name,
           }
 
           this.dataService.putCart(itemID).subscribe((res: CartWithID) => {
-            console.log("update cart", res)
             this.router.navigate(['cart'])
           });
         })

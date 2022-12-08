@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { SignupNewUser, SignUpResponse, Users, UsersWithId } from 'src/app/shared/models/users.model';
 import { AuthService } from 'src/app/shared/service/auth.service';
@@ -13,6 +13,7 @@ export class ActiononUsersComponent implements OnInit {
   @Input() userID: string;
   isShow: boolean = false;
   addUserForm!: FormGroup;
+  @Output() addUserEvent = new EventEmitter<boolean>();
 
   constructor(private authService: AuthService, private formBuilder: FormBuilder) {
     this.addUserForm = this.formBuilder.group({
@@ -29,16 +30,10 @@ export class ActiononUsersComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.initaddUserForm();
-    console.log('from child: ', this.userID)
     if (this.userID) {
       this.fillUserDetails();
       this.isShow = !this.isShow;
     }
-  }
-
-  initaddUserForm() {
-    
   }
 
   validatingFrom(controlName: string, matchingControlName: string) {
@@ -59,7 +54,6 @@ export class ActiononUsersComponent implements OnInit {
 
   fillUserDetails() {
     this.authService.getUserById(this.userID).subscribe((res: UsersWithId) => {
-      console.log('res data:', res);
       this.addUserForm = new FormGroup({
         name: new FormControl(res.name),
         email: new FormControl(res.email),
@@ -87,10 +81,8 @@ export class ActiononUsersComponent implements OnInit {
       }
 
       this.authService.signUp(user).subscribe((response: SignUpResponse) => {
-        console.log("sign up response", response)
 
         this.authService.addUser(newUser).subscribe((res: Users) => {
-          console.log('firebase user add', res);
 
           const userWithId = {
             id: res.name,
@@ -98,7 +90,7 @@ export class ActiononUsersComponent implements OnInit {
           }
 
           this.authService.putUser(userWithId).subscribe((res: UsersWithId) => {
-            console.log('firebase user updated', res);
+            this.addUserEvent.emit(true);
           })
         })
       });
@@ -109,7 +101,7 @@ export class ActiononUsersComponent implements OnInit {
         ...newUser
       }
       this.authService.updateUser(userWithId, this.userID).subscribe((res: UsersWithId) => {
-        console.log("updated user", res)
+        this.addUserEvent.emit(true);
       });
     }
     this.addUserForm.reset();

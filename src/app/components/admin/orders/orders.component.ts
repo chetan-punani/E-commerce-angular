@@ -20,13 +20,12 @@ export class OrdersComponent implements OnInit {
   loadOrders(): void {
     this.myOrdersItem = [];
     let userlocal = localStorage.getItem('token');
-    if(userlocal) {
+    if (userlocal) {
 
-      this.dataService.getMyOrders().subscribe( (res: MyOrderWithID[]) => {
-        console.log('get orders-', res)
-        res.forEach( (resVal: MyOrderWithID) => {
+      this.dataService.getMyOrders().subscribe((res: MyOrderWithID[]) => {
+        res.forEach((resVal: MyOrderWithID) => {
           resVal.order.forEach((orderVal: CartWithID) => {
-            this.dataService.getProductById(orderVal.productId, orderVal.productCategory).subscribe( (productVal: ProductWithId) => {
+            this.dataService.getProductById(orderVal.productId, orderVal.productCategory).subscribe((productVal: ProductWithId) => {
               this.myOrdersItem.push({
                 name: productVal.name,
                 price: productVal.price,
@@ -34,10 +33,9 @@ export class OrdersComponent implements OnInit {
               })
             })
           })
-        })      
-        console.log(this.myOrdersItem)
+        })
       })
+    }
   }
-}
- 
+
 }

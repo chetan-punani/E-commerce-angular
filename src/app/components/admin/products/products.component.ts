@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { take  } from 'rxjs';
-import { Product, ProductWithId } from 'src/app/shared/models/product.model';
+import { ProductWithId } from 'src/app/shared/models/product.model';
 import { DataService } from 'src/app/shared/service/data.service';
 
 @Component({
@@ -31,7 +30,6 @@ export class ProductsComponent implements OnInit {
           tempArray = Object.values(ele);
           tempArray.forEach((ele) => {
             this.productList.push(ele);
-
           });
         });
       }
@@ -53,10 +51,15 @@ export class ProductsComponent implements OnInit {
 
   deleteProduct(id: any, category: string) {
     this.dataService.deleteProduct(id, category).subscribe((res: ProductWithId) => {
-      console.log('delete :', res)
       this.loadData();
     });
-    
+  }
+
+  refreshData(value: boolean) {
+    if(value) {
+      this.showAddProduct();
+      this.loadData();
+    }
   }
 
 }

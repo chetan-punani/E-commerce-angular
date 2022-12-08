@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { SignupNewUser, SignUpResponse, Users, UsersWithId } from 'src/app/shared/models/users.model';
 import { AuthService } from 'src/app/shared/service/auth.service';
-import { DataService } from 'src/app/shared/service/data.service';
 
 @Component({
   selector: 'app-signup',
@@ -54,7 +53,6 @@ export class SignupComponent implements OnInit {
       returnSecureToken: true
     }
     this.authService.signUp(newUser).subscribe((response: SignUpResponse) => {
-      console.log("sign up response", response)
 
       const user: Users = {
         name: this.signUpForm.value.name,
@@ -65,7 +63,6 @@ export class SignupComponent implements OnInit {
       }
 
       this.authService.addUser(user).subscribe((res: Users) => {
-        console.log('firebase user add', res);
 
         const userWithId = {
           id: res.name,
@@ -73,7 +70,6 @@ export class SignupComponent implements OnInit {
         }
         
         this.authService.putUser(userWithId).subscribe((res: UsersWithId) => {
-          console.log('firebase user updated', res);
         })
       })
     });

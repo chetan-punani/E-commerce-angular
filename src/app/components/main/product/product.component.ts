@@ -1,7 +1,6 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { Product, ProductWithId } from 'src/app/shared/models/product.model';
-import { DataService } from 'src/app/shared/service/data.service';
+import { ProductWithId } from 'src/app/shared/models/product.model';
 
 @Component({
   selector: 'app-product',
@@ -40,7 +39,6 @@ export class ProductComponent implements OnInit {
   }
 
   showProductOfCategory(category: string): void {
-    console.log(category)
     this.router.navigate(['product',category])
   }
 

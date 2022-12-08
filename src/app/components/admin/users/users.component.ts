@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Users, UsersWithId } from 'src/app/shared/models/users.model';
+import { UsersWithId } from 'src/app/shared/models/users.model';
 import { AuthService } from 'src/app/shared/service/auth.service';
 
 @Component({
@@ -22,13 +22,11 @@ export class UsersComponent implements OnInit {
   loadUsers(): void {
     this.authService.getUsers().subscribe((user: UsersWithId[]) => {
       if (user) {
-        console.log(user)
         this.userList = [];
         user.forEach((ele) => {
           this.userList.push(ele);
         });
       }
-      console.log(this.userList)
     })
   }
 
@@ -49,5 +47,12 @@ export class UsersComponent implements OnInit {
   //     this.loadUsers();
   //   });
   // }
+
+  refreshData(value: boolean) {
+    if(value) {
+      this.showAddUser();
+      this.loadUsers();
+    }
+  }
 
 }

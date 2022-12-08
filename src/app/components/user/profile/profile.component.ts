@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { UsersWithId } from 'src/app/shared/models/users.model';
 import { AuthService } from 'src/app/shared/service/auth.service';
+import { DataService } from 'src/app/shared/service/data.service';
 
 @Component({
   selector: 'app-profile',
@@ -15,7 +17,8 @@ export class ProfileComponent implements OnInit {
   logedInUserId: string;
   addUserForm!: FormGroup;
 
-  constructor(private authService: AuthService, private formBuilder: FormBuilder) {
+  constructor(private authService: AuthService, private formBuilder: FormBuilder, private router: Router
+    ,private dataService: DataService) {
     this.addUserForm = this.formBuilder.group({
       name: new FormControl(null, Validators.required),
       email: new FormControl(null, [Validators.required, Validators.email]),
@@ -29,10 +32,9 @@ export class ProfileComponent implements OnInit {
   }
 
   loadUsers(): void {
-    let userlocal = localStorage.getItem('token');
+    let userlocal = this.dataService.getLocalStorageUser();
     if (userlocal) {
-      let User = JSON.parse(userlocal);
-      if (User.email) {
+      if (userlocal.email) {
         this.authService.getUsers().subscribe((user: UsersWithId[]) => {
           if (user) {
             this.userList = [];
@@ -40,11 +42,9 @@ export class ProfileComponent implements OnInit {
               this.userList.push(ele);
             });
           }
-          console.log(this.userList)
           this.logedInUser = this.userList.filter((res: UsersWithId) => {
-            return res.email === User.email
+            return res.email === userlocal.email
           })
-          console.log(this.logedInUser)
 
           this.logedInUser.forEach( (user: UsersWithId) => {
             this.addUserForm = new FormGroup({
@@ -72,10 +72,17 @@ export class ProfileComponent implements OnInit {
     }
 
     this.authService.updateUser(newUser, newUser.id).subscribe((res: UsersWithId) => {
-      console.log("updated user", res)
+      this.addUserForm.reset();
     });
 
-    this.addUserForm.reset();
   }
+
+  logout() {
+    if (localStorage.getItem('token')) {
+      localStorage.removeItem('token');
+    }
+    this.router.navigate(['/login'])
+  }
+
 
 }

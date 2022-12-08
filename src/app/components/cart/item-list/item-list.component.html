@@ -1,4 +1,4 @@
-<!-- <app-item-view></app-item-view> -->
+
 <div class="p-1">
     <div class="row" *ngIf="productItem">
         <div class="col-2">
@@ -20,7 +20,7 @@
                                     <div class="card-body">
                                         <h6 class="card-title">{{ productItem.name }}</h6>
                                         <p>{{productItem.description}}</p>
-                                        <p>From {{ productItem.price }}</p>
+                                        <p>From {{ productItem.price | currency:'INR' }}</p>
                                         <p>{{productItem.stock}}</p>
                                     </div>
                                 </div>

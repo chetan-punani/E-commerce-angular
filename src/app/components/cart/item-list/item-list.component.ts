@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { CartWithID, Product, ProductWithId } from 'src/app/shared/models/product.model';
+import { CartWithID, ProductWithId } from 'src/app/shared/models/product.model';
 import { DataService } from 'src/app/shared/service/data.service';
 
 @Component({
@@ -16,7 +16,6 @@ export class ItemListComponent implements OnInit {
   constructor(private dataService: DataService) { }
 
   ngOnInit(): void {
-    console.log(this.cartItemVal)
     this.getCartItem();
   }
 
@@ -28,7 +27,6 @@ export class ItemListComponent implements OnInit {
 
   deleteItem(id: string): void {
     this.dataService.deleteCartById(id).subscribe( (res: CartWithID) => {
-      console.log(res);
       this.refreshCartEvent.emit(true);
     })
   }
