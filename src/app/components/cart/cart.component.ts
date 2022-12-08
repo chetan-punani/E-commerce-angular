@@ -14,11 +14,14 @@ export class CartComponent implements OnInit {
   itemId: string;
   itemCategory: string;
   logedInUserEmail: string;
+  total: number = 0;
 
-  constructor(private dataService: DataService, private router: Router) { }
+  constructor(private dataService: DataService, private router: Router) { 
+    this.getCart();
+  }
 
   ngOnInit(): void {
-    this.getCart();
+   
   }
 
   getCart() {
@@ -31,9 +34,19 @@ export class CartComponent implements OnInit {
           this.cardItem = res.filter( (res: CartWithID) => {
             return (res.userEmail === userlocal.email);
           });
+          this.getGrandTotal();
         } 
       })
     }
+  }
+
+  getGrandTotal() {
+    this.total = 0;
+    this.cardItem.forEach( (cartItem: CartWithID) => {
+      this.dataService.getProductById(cartItem.productId, cartItem.productCategory).subscribe( (product: ProductWithId) => {
+        this.total = this.total + product.price;
+      })
+    })
   }
 
   refreshCart(value: boolean) {

@@ -105,7 +105,6 @@ export class DataService {
 
   private converterCart( cartObj: any ) {
     const carts: CartWithID[] = [];
-    if(cartObj = null)
     Object.keys( cartObj ).forEach( key => {
       const cart: CartWithID = cartObj[key];
       carts.push( cart );
